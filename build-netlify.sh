@@ -8,7 +8,7 @@ go get -v github.com/strongdm/comply
 
 # space-delimited list of extra latex packages to install
 # See https://www.ctan.org/pkg/[latexpackage] to find the texlive bundle
-LATEXPACKAGES="mdw­tools graph­ics oberdiek setspace amsmath eu­rosym upquote fan­cyvrb poly­glos­sia natbib listings tools booktabs parskip bidi fancyhdr"
+LATEXPACKAGES="mdwtools graphics oberdiek setspace amsmath eurosym upquote fancyvrb polyglossia natbib listings tools booktabs parskip bidi fancyhdr"
 
 # Netlify Xenial images don't have a texlive install, so we need to install it on first build.
 # We're putting it in the `/opt/build/cache` folder, which is kept between builds

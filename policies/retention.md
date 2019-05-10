@@ -11,7 +11,7 @@ majorRevisions:
     comment: Initial document
 ---
 
-#Appendices
+# Appendices
 Appendix A: Retention Periods
 
 # Purpose and Scope
