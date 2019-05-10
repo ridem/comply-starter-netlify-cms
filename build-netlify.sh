@@ -14,7 +14,7 @@ if [ ! -d "$TEXLIVEDIR" ]; then
   wget -q http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   mkdir -p texlive-installer "$TEXLIVEDIR"
   tar -xf install-tl-unx.tar.gz -C ./texlive-installer --strip 1
-  ./texlive-installer/install-tl --profile ./texlive.profile
+  ./texlive-installer/install-tl --profile ./netlify-texlive.profile
 fi
 
 export PATH="$PATH:$TEXLIVEDIR/bin/x86_64-linux"

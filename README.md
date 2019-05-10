@@ -2,6 +2,11 @@
 
 This repository consolidates all documents related to the Sample Organization Compliance Program.
 
+Demo website: https://comply-netlify-cms.netlify.com
+
+<!-- Markdown snippet -->
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ridem/comply-starter-netlify-cms)
+
 # Structure
 
 Compliance documents are organized as follows:
