@@ -22,11 +22,8 @@ fi
 
 export PATH="$PATH:$TEXLIVEDIR/bin/x86_64-linux"
 
-# If a GITHUB_TOKEN env variable is defined, try to build a "comply.yml" file out of it
-if [ ! -z "$GITHUB_TOKEN" ]; then
-  # We couldn't find a texlive install in the cache, so we install it
-  sed "s/\[GITHUB_TOKEN\]/$GITHUB_TOKEN/" comply.dist.yml > comply.yml
-fi
+# Try to build a "comply.yml" by substituting ENV variable set on netlify (e.g. GITHUB_TOKEN)
+envsubst < comply.dist.yml > comply.yml
 
 # All dependencies are installed (from the second build, everything will be loaded from the cache)
 # Let's build the documents now!

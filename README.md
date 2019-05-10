@@ -12,7 +12,8 @@ It follows the [JAMstack architecture](https://jamstack.org) by using Git as a s
 
 - All features from [Comply](https://comply.strongdm.com)
 - An easy process to have an always up-to-date compliance dashboard with the PDF files, served through a CDN
-- Netlify can run `run-comply.sh` files on demand through a webhook call, making it suitable for a daily call and tickets synchronization
+- Netlify can run the build command (see `run-comply.sh`) on demand through a webhook call, making it suitable for a daily call and tickets synchronization (Zapier or else)
+- Project is set up to not leak secrets (CVS tokens), comply.yml is generated out of comply.dist.yml
 - Builds of this repo take around 1mn between git push and the publishing of the new site (Very fast!)
 - Optionally, Netlify CMS can be used to handle the editing of the policies (Visit https://comply-netlify-cms.netlify.com/admin and ask for an invite to see how this works)
 
