@@ -8,9 +8,12 @@ export PATH="$PATH:$GOPATH/bin"
 
 # Netlify Xenial images don't have a texlive install, so we need to install it on first build.
 # We're putting it in the `/opt/build/cache` folder, which is kept between builds
+# The following folder is mentioned in netlify-texlive.profile
 TEXLIVEDIR="/opt/build/cache/texlive"
-if [ ! -d "$TEXLIVEDIR" ]; then
-  # We couldn't find a texlive install in the cache, so we install it
+TEXLIVEBINDIR="$TEXLIVEDIR/bin/x86_64-linux"
+
+# Let's test that a pdflatex executable is present:
+if [ ! -f "$TEXLIVEBINDIR/pdflatex" ]; then
   wget -q http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   mkdir -p texlive-installer "$TEXLIVEDIR"
   tar -xf install-tl-unx.tar.gz -C ./texlive-installer --strip 1
