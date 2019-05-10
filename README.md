@@ -1,11 +1,28 @@
-# Sample Organization Compliance Program
+# Comply - Netlify CMS Starter Kit
 
-This repository consolidates all documents related to the Sample Organization Compliance Program.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5a78d4de-72e1-48b2-9aa9-66964f06f67e/deploy-status)](https://app.netlify.com/sites/comply-netlify-cms/deploys)
 
 Demo website: https://comply-netlify-cms.netlify.com
 
-<!-- Markdown snippet -->
+This repo contains an example comply site that is built with [Comply](https://comply.strongdm.com), and [Netlify CMS](https://www.netlifycms.org): **[Demo Link](https://comply-netlify-cms.netlify.com)**.
+
+It follows the [JAMstack architecture](https://jamstack.org) by using Git as a single source of truth, and [Netlify](https://www.netlify.com) for continuous deployment, and CDN distribution.
+
+## Features
+
+- All features from [Comply](https://comply.strongdm.com)
+- An easy process to have an always up-to-date compliance dashboard with the PDF files, served through a CDN
+- Netlify can run `run-comply.sh` files on demand through a webhook call, making it suitable for a daily call and tickets synchronization
+- Builds of this repo take around 1mn between git push and the publishing of the new site (Very fast!)
+- Optionally, Netlify CMS can be used to handle the editing of the policies (Visit https://comply-netlify-cms.netlify.com/admin and ask for an invite to see how this works)
+
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ridem/comply-starter-netlify-cms)
+
+Here's the readme template from comply:
+
+# Sample Organization Compliance Program
+
+This repository consolidates all documents related to the Sample Organization Compliance Program.
 
 # Structure
 
