@@ -13,42 +13,20 @@ It follows the [JAMstack architecture](https://jamstack.org) by using Git as a s
 - All features from [Comply](https://comply.strongdm.com)
 - An easy process to have an always up-to-date compliance dashboard with the PDF files, served through a CDN
 - Netlify can run the build command (see `run-comply.sh`) on demand through a webhook call, making it suitable for a daily call and tickets synchronization (Zapier or else)
+- Ability to password-protect the whole deployed site (see Netlify options)
 - Project is set up to not leak secrets (CVS tokens), comply.yml is generated out of comply.dist.yml
 - Builds of this repo take around 1mn between git push and the publishing of the new site (Very fast!)
-- Optionally, Netlify CMS can be used to handle the editing of the policies (Visit https://comply-netlify-cms.netlify.com/admin and ask for an invite to see how this works)
+- Optionally, Netlify CMS can be used to handle the editing of the policies in a user-friendly way. See next section.
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ridem/comply-starter-netlify-cms)
 
-Here's the readme template from comply:
+## Netlify CMS
+The project also includes a Netlify CMS config file (See[config.yml](static/admin/config.yml)), and makes an admin interface available at /admin.
 
-# Sample Organization Compliance Program
+The git repository is used as the backend to retrieve the files, and saving a change is triggering a push of the changes on the publishing branch (`master` here)
 
-This repository consolidates all documents related to the Sample Organization Compliance Program.
+Ask for an invite then visit https://comply-netlify-cms.netlify.com/admin to see how this works.
 
-# Structure
-
-Compliance documents are organized as follows:
-
-```
-narratives/     Narratives provide an overview of the organization and the compliance environment.
-policies/       Policies govern the behavior of employees and contractors.
-procedures/     Procedures prescribe specific steps that are taken in response to key events.
-standards/      Standards specify the controls satisfied by the compliance program.
-templates/      Templates control the output format of the HTML Dashboard and PDF assets.
-```
-
-# Building
-
-Assets are built using [`comply`](https://comply.strongdm.com), which can be installed via `brew install comply` (macOS) or `go get github.com/strongdm/comply`
-
-# Publishing
-
-The `output/` directory contains all generated assets. Links in the HTML dashboard a relative, and all dependencies are included via direct CDN references. The entire `output/` directory therefore may be uploaded to an S3 bucket or other static asset host without further modification.
-
-# Dashboard Status
-
-Procedure tracking is updated whenever `comply sync` is invoked. Invoke a sync prior to `comply build` to include the most current ticket status.
-
-# Procedure Scheduler
-
-Any `procedures/` that include a `cron` schedule will automatically created in your configured ticketing system whenever `comply scheduler` is executed. The scheduler will backfill any overdue tickets.
+Some screenshots:
+![Admin Dashboard](.github/admin_dashboard.png?raw=true "Admin Dashboard")
+![Admin Edit](.github/admin_edit.png?raw=true "Admin Edit")
