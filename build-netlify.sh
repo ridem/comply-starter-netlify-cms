@@ -1,16 +1,21 @@
 #!/bin/bash
 
-# Install comply with Go
+## Installing comply ##
+
 go get -v github.com/strongdm/comply
 
-# Adding the Go binary folder to the current path
-export PATH="$PATH:$GOPATH/bin"
+## Installing texlive ##
+
+# space-delimited list of extra latex packages to install
+LATEXPACKAGES="footnote graphicx grffile beamerarticle setspace amssymb amsmath fixltx2e eurosym upquote fancyvrb polyglossia natbib listings longtable booktabs parskip bidi fancyhdr"
 
 # Netlify Xenial images don't have a texlive install, so we need to install it on first build.
 # We're putting it in the `/opt/build/cache` folder, which is kept between builds
 # The following folder is mentioned in netlify-texlive.profile
 TEXLIVEDIR="/opt/build/cache/texlive"
 TEXLIVEBINDIR="$TEXLIVEDIR/bin/x86_64-linux"
+
+export PATH="$PATH:$TEXLIVEBINDIR:$GOPATH/bin"
 
 # Let's test that a pdflatex executable is present:
 if [ ! -f "$TEXLIVEBINDIR/pdflatex" ]; then
@@ -20,9 +25,12 @@ if [ ! -f "$TEXLIVEBINDIR/pdflatex" ]; then
   ./texlive-installer/install-tl --profile ./netlify-texlive.profile
 fi
 
-export PATH="$PATH:$TEXLIVEDIR/bin/x86_64-linux"
+# Installing dependencies. If they're already present, they won't be rebuilt.
+for val in $LATEXPACKAGES; do
+    tlmgr install "$val" || echo "Couldn't install the following LaTeX package: $val"
+done
 
-# Try to build a "comply.yml" by substituting ENV variable set on netlify (e.g. GITHUB_TOKEN)
+# Building "comply.yml" by substituting ENV variable set on netlify (e.g. GITHUB_TOKEN)
 envsubst < comply.dist.yml > comply.yml
 
 # All dependencies are installed (from the second build, everything will be loaded from the cache)
