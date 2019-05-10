@@ -235,7 +235,7 @@ html lang=en
         .content.has-text-centered
           p {{.Project.OrganizationName}} Confidential 2019
           p Build date: [Build date]
-          p data-netlify-identity-button="" Login
+          p data-netlify-identity-button=""
   = javascript
     if (window.location.hash=="") {
       show('overview')
