@@ -1,0 +1,9 @@
+name: Sample Organization
+filePrefix: Sample
+tickets:
+  github:
+    repo: comply-starter-netlify-cms
+    token: "[GITHUB_TOKEN]"
+    username: ridem
+
+approvedBranch: master

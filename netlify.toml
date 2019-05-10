@@ -1,0 +1,13 @@
+[build]
+  command = "./build-netlify.sh"
+  publish = "output"
+
+[template.environment]
+  GITHUB_TOKEN = "Put your github token here if needed, leave empty otherwise"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # If you wish to password-protect the site, uncomment the following line:
+    # Basic-Auth = "user:password"
+    # You can put security response headers here
