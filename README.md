@@ -18,7 +18,7 @@ It follows the [JAMstack architecture](https://jamstack.org) by using Git as a s
 - Leveraging on Netlify's numerous site protection options (Google, Github, Bitbucket, Gitlab OAuth providers are supported out of the box) to restrict access to the site.
 - Optionally, Netlify CMS can be used to handle the editing of the policies in a user-friendly way. See next section.
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ridem/comply-starter-netlify-cms)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ridem/comply-starter-netlify-cms&stack=cms)
 
 ## Netlify CMS
 The project also includes a Netlify CMS config file (See [config.yml](static/admin/config.yml)), and makes an admin interface available at /admin.
