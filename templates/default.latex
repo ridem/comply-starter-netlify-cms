@@ -3,7 +3,20 @@ $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
 
-\usepackage{etoolbox}
+\newif\iffigures
+
+\makeatletter
+\AtEndDocument {%
+    \if@filesw
+       \ifnum\value{figure}=\z@ % no figures
+          \immediate\write\@mainaux {\global\string\figuresfalse}%
+       \else
+          \immediate\write\@mainaux {\global\string\figurestrue}%
+       \fi
+    \fi
+}
+\makeatother 
+
 
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
@@ -238,26 +251,6 @@ $endif$
 % \date{$date$}
 \date{}
 
-\newif\iffigures
-\newif\iftables
-
-\makeatletter
-\AtEndDocument {%
-    \if@filesw
-       \ifnum\value{figure}=\z@ % no figures
-          \immediate\write\@mainaux {\global\string\figuresfalse}%
-       \else
-          \immediate\write\@mainaux {\global\string\figurestrue}%
-       \fi
-       \ifnum\value{table}=\z@ % no tables
-          \immediate\write\@mainaux {\global\string\tablesfalse}%
-       \else
-          \immediate\write\@mainaux {\global\string\tablestrue}%
-       \fi
-    \fi
-}
-\makeatother 
-
 \begin{document}
 $if(title)$
 \maketitle
@@ -273,9 +266,11 @@ $endif$
 \bigskip
 \bigskip
 
+\begin{center}
 $for(include-before)$
 $include-before$
 $endfor$
+\end{center}
 \clearpage
 $if(toc)$
 {

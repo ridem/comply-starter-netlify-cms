@@ -246,7 +246,7 @@ html lang=en
             {{end}}
             td
               {{range .SatisfiedBy}}
-              a.is-size-7 href={{.}} target=_blank style="white-space: nowrap;"
+              a.is-size-7 href=/documents/{{.}} target=_blank style="white-space: nowrap;"
                 {{.}}
               {{end}}
           {{end}}
