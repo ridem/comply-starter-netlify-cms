@@ -1,0 +1,26 @@
+.cms-editor-visual div[data-slate-editor] {
+  counter-reset: h1;
+}
+
+.cms-editor-visual div[data-slate-editor] p {
+  text-align: justify;
+}
+
+.cms-editor-visual div[data-slate-editor] h1 {
+  counter-reset: h2;
+}
+.cms-editor-visual div[data-slate-editor] h2 {
+  counter-reset: h3;
+}
+.cms-editor-visual div[data-slate-editor] h1:before {
+  counter-increment: h1;
+  content: counter(h1) "\0000a0\0000a0\0000a0";
+}
+.cms-editor-visual div[data-slate-editor] h2:before {
+  counter-increment: h2;
+  content: counter(h1) "." counter(h2) "\0000a0\0000a0\0000a0";
+}
+.cms-editor-visual div[data-slate-editor] h3:before {
+  counter-increment: h3;
+  content: counter(h1) "." counter(h2) "." counter(h3) "\0000a0\0000a0\0000a0";
+}

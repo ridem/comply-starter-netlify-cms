@@ -1,8 +1,8 @@
-
+---
 name: Office Security Policy
 acronym: OSP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC6.4
 majorRevisions:
   - date: Jun 1 2018

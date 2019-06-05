@@ -1,6 +1,10 @@
 backend:
   name: git-gateway
   branch: master
+  squash_merges: true
+  # Uncomment the next two lines once your admins have the "editor" role
+  # accept_roles:
+  #   - editor
   commit_messages:
     create: Create {{collection}} “{{slug}}”
     update: Update {{collection}} “{{slug}}”
@@ -8,55 +12,58 @@ backend:
     uploadMedia: Upload “{{path}}”
     deleteMedia: Delete “{{path}}”
 
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow
 
 # Uploads folder on the repo:
 media_folder: "static/uploads"
 # Assets in the uploads folder end up served at:
-public_folder: "/uploads"
+public_folder: "uploads"
 
-# TODO: Replace with your published site URL here:
-site_url: "https://comply-netlify-cms.netlify.com"
+site_url: "/"
+display_url: "https://comply-netlify-cms.netlify.com"
 logo_url: "https://comply.strongdm.com/wp-content/uploads/2018/05/comply-logo-w-sdm.png"
 
 show_preview_links: true
 
-slug: {encoding: "ascii", clean_accents: true}
+slug: 
+  encoding: "ascii"
+  clean_accents: true
 
 collections:
   - name: "narratives" # Used in routes, e.g., /admin/collections/blog
     label: "Narratives" # Used in the UI
     label_singular: "Narrative"
+    description: "Narratives provide an overview of the organization and the compliance environment."
     folder: "narratives" # The path to the folder where the documents are stored
-    preview_path: "/Sample-{{acronym}}.pdf"
-    extension: "md"
+    preview_path: "/documents/Sample-{{acronym}}.pdf"
     identifier_field: "name"
-    frontmatter_delimiter: ["", "---"]
-    format: "yaml-frontmatter"
     summary: "[{{acronym}}] {{name}}"
     create: true # Allow users to create new documents in this collection
     fields: # The fields for each document, usually in front matter
       - label: "Name"
         name: "name"
         widget: "string"
-        required: true
       - label: "Acronym"
         name: "acronym"
         widget: "string"
-        required: true
         pattern: ['^[A-Z]{2,5}$', "Series of 2->5 capital letters, e.g. DRP"]
         hint: "Will be used to create the PDF file"
-      # - label: Satisfies
-      #   name: satisfies
-      #   widget: object
-      #   fields:
-      #     - label: "TSC"
-      #       name: TSC
-      #       widget: list
+      - label: "External URL"
+        name: "external_url"
+        widget: "string"
+        required: false
+        hint: "Just for convenience, the URL to a corresponding working document"
+      - label: Satisfies
+        name: satisfies
+        widget: object
+        fields:
+          - label: "TSC"
+            name: TSC 2017
+            widget: "satisfies"
+            required: false
       - label: "Major Revisions"
         name: "majorRevisions"
         widget: "list"
-        required: true
         fields:
           - label: "Date"
             name: "date"
@@ -65,18 +72,19 @@ collections:
           - label: "Comment"
             name: "comment"
             widget: "string"
+            default: "Initial version"
       - label: "Body"
         name: "body"
         widget: "markdown"
-        required: true
   - name: "policies" # Used in routes, e.g., /admin/collections/blog
     label: "Policies" # Used in the UI
     label_singular: "Policy"
+    description: "Policies govern the behavior of employees and contractors."
     folder: "policies" # The path to the folder where the documents are stored
-    preview_path: "/Sample-{{acronym}}.pdf"
+    preview_path: "/documents/Sample-{{acronym}}.pdf"
     extension: "md"
     identifier_field: "name"
-    frontmatter_delimiter: ["", "---"]
+    frontmatter_delimiter: ---
     format: "yaml-frontmatter"
     summary: "[{{acronym}}] {{name}}"
     create: true # Allow users to create new documents in this collection
@@ -84,24 +92,27 @@ collections:
       - label: "Name"
         name: "name"
         widget: "string"
-        required: true
       - label: "Acronym"
         name: "acronym"
         widget: "string"
-        required: true
         pattern: ['^[A-Z]{2,5}$', "Series of 2->5 capital letters, e.g. DRP"]
         hint: "Will be used to create the PDF file"
-      # - label: Satisfies
-      #   name: satisfies
-      #   widget: object
-      #   fields:
-      #     - label: "TSC"
-      #       name: TSC
-      #       widget: list
+      - label: "External URL"
+        name: "external_url"
+        widget: "string"
+        required: false
+        hint: "Just for convenience, the URL to a corresponding working document"
+      - label: Satisfies
+        name: satisfies
+        widget: object
+        fields:
+          - label: "TSC"
+            name: TSC 2017
+            widget: "satisfies"
+            required: false
       - label: "Major Revisions"
         name: "majorRevisions"
         widget: "list"
-        required: true
         fields:
           - label: "Date"
             name: "date"
@@ -110,49 +121,45 @@ collections:
           - label: "Comment"
             name: "comment"
             widget: "string"
+            default: "Initial version"
       - label: "Body"
         name: "body"
         widget: "markdown"
-        required: true
   - name: "procedures" # Used in routes, e.g., /admin/collections/blog
     label: "Procedures" # Used in the UI
     label_singular: "Procedure"
+    description: "Procedures prescribe specific steps that are taken in response to key events."
     folder: "procedures" # The path to the folder where the documents are stored
-    extension: "md"
     identifier_field: "name"
-    frontmatter_delimiter: ["", "---"]
-    format: "yaml-frontmatter"
     preview_path: "/#procedures"
+    editor:
+      preview: false
     create: true # Allow users to create new documents in this collection
     fields: # The fields for each document, usually in front matter
       - label: "Name"
         name: "name"
         widget: "string"
-        required: true
       - label: "ID"
         name: "id"
         widget: "string"
-        required: true
         hint: "ID of the procedure"
       - label: "Schedule (cron format)"
         name: "cron"
         widget: "string"
-        hint: "Only if recurring, head to crontab.guru to translate/create"
-      - label: "Body"
+        hint: "If recurring procedure, head to crontab.guru to translate/create (remove leading 0)"
+      - label: "Ticket template"
         name: "body"
         widget: "markdown"
-        required: true
   - name: "standards"
     label: "Standards"
-    label_singular: "Standard"
-    extension: "yml"
-    preview_path: "/#standards"
-    format: "yaml"
+    description: "List of standards in use. Not editable here."
+    delete: false
+    editor:
+      preview: false
     files:
-      - name: "TSC"
+      - name: "TSC 2017"
         label: "TSC 2017"
         file: "standards/TSC-2017.yml"
         fields:
-          - label: "Name"
-            name: "name"
-            widget: "string"
+          - name: "name"
+            widget: "hidden"

@@ -1,8 +1,8 @@
-
+---
 name: Availability Policy
 acronym: AP
 satisfies:
-  TSC:
+  TSC 2017:
     - A1.1
     - CC9.1
 majorRevisions:

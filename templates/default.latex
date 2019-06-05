@@ -1,7 +1,10 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[a4paper,$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
+
+\usepackage{etoolbox}
+
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
@@ -52,7 +55,7 @@ $endif$
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
+% % use microtype if available
 \IfFileExists{microtype.sty}{%
 \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
@@ -65,6 +68,13 @@ $endif$
 $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 $endif$
+% Don't add creation/modification dates to the PDF metadata 
+\pdfinfoomitdate 1
+% Remove the PTEX.Fullbanner field
+\pdfsuppressptexinfo 1
+% \pdfvariable suppressoptionalinfo \numexpr 1+2+4+8+16+32+64+128+256+512 \relax
+% Use the title of the document to generate an ID hash, rather than hashing current date + output path
+\pdftrailerid{$title-meta$}
 \hypersetup{
 $if(title-meta)$
             pdftitle={$title-meta$},
@@ -75,6 +85,8 @@ $endif$
 $if(keywords)$
             pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
+            pdfcreator={},
+            pdfproducer={},
 $if(colorlinks)$
             colorlinks=true,
             linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
@@ -91,6 +103,7 @@ $endif$
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
+\usepackage[a4paper, margin=3cm]{geometry}
 $if(lang)$
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
@@ -129,8 +142,8 @@ $if(tables)$
 % Fix footnotes in tables (requires footnote package)
 \IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
 $endif$
-$if(graphics)$
 \usepackage{graphicx,grffile}
+\graphicspath{ {./static/uploads/} }
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -139,7 +152,6 @@ $if(graphics)$
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-$endif$
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
@@ -210,7 +222,7 @@ $if(header-includes)$
 $endif$
 
 $if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+\title{\includegraphics[width=6cm]{logo}\\[2cm] $title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
 \providecommand{\subtitle}[1]{}
@@ -223,7 +235,25 @@ $if(institute)$
 \providecommand{\institute}[1]{}
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
-\date{$date$}
+% \date{$date$}
+\date{}
+
+\newcounter{totfigures}
+\newcounter{tottables}
+
+\providecommand\totfig{} 
+\providecommand\tottab{}
+
+\makeatletter
+\AtEndDocument{%
+  \addtocounter{totfigures}{\value{figure}}%
+  \addtocounter{tottables}{\value{table}}%
+  \immediate\write\@mainaux{%
+    \string\gdef\string\totfig{\number\value{totfigures}}%
+    \string\gdef\string\tottab{\number\value{tottables}}%
+  }%
+}
+\makeatother
 
 \begin{document}
 $if(title)$
@@ -235,10 +265,15 @@ $abstract$
 \end{abstract}
 $endif$
 
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
 $for(include-before)$
 $include-before$
-
 $endfor$
+\clearpage
 $if(toc)$
 {
 $if(colorlinks)$
@@ -248,12 +283,16 @@ $endif$
 \tableofcontents
 }
 $endif$
+% \vspace{1cm}
 $if(lot)$
 \listoftables
 $endif$
 $if(lof)$
-\listoffigures
+\if \totfig{} > 0 \listoffigures \fi
 $endif$
+
+\clearpage
+
 $body$
 
 $if(natbib)$

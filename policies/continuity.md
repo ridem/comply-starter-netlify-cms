@@ -1,8 +1,8 @@
-
+---
 name: Business Continuity Policy
 acronym: BCP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC9.1
 majorRevisions:
   - date: Jun 1 2018

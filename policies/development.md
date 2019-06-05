@@ -1,8 +1,8 @@
-
+---
 name: Software Development Lifecycle Policy
 acronym: SDLCP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC8.1
 majorRevisions:
   - date: Jun 1 2018

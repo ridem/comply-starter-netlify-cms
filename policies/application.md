@@ -1,8 +1,8 @@
-
+---
 name: Application Security Policy
 acronym: ASP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC6.2
 majorRevisions:
   - date: Jun 1 2018

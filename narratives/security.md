@@ -1,8 +1,8 @@
-
+---
 name: Security Architecture Narrative
 acronym: SEN
 satisfies:
-  TSC:
+  TSC 2017:
     - CC6.6
     - CC6.7
     - CC7.1

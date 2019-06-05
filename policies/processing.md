@@ -1,8 +1,8 @@
-
+---
 name: Processing Integrity Policy
 acronym: PIP
 satisfies:
-  TSC:
+  TSC 2017:
     - PI1.1
     - PI1.2
     - PI1.3

@@ -1,8 +1,8 @@
-
+---
 name: Disaster Recovery Policy
 acronym: DRP
 satisfies:
-  TSC:
+  TSC 2017:
     - A1.2
     - A1.3
 majorRevisions:

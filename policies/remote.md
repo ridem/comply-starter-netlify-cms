@@ -1,8 +1,8 @@
-
+---
 name: Remote Access Policy
 acronym: REAP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC6.1
     - CC6.2
     - CC6.7

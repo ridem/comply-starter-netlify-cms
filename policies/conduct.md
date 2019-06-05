@@ -1,8 +1,8 @@
-
+---
 name: Code of Conduct Policy
 acronym: COCP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC1.1
 majorRevisions:
   - date: Jun 1 2018

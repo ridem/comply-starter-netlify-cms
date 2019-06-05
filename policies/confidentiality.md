@@ -1,8 +1,8 @@
-
+---
 name: Confidentiality Policy
 acronym: CP
 satisfies:
-  TSC:
+  TSC 2017:
     - C1.1
     - C1.2
 majorRevisions:

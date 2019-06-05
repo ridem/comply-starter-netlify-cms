@@ -1,8 +1,8 @@
-
+---
 name: Vendor Management Policy
 acronym: VMP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC9.2
 majorRevisions:
   - date: Jun 1 2018

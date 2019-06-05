@@ -1,8 +1,8 @@
-
+---
 name: Security Incident Response Policy
 acronym: SIRP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC7.3
     - CC7.4
     - CC7.5

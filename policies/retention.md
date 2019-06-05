@@ -1,8 +1,8 @@
-
+---
 name: Data Retention Policy
 acronym: RP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC1.2
     - CC6.5
     - P4.2

@@ -1,8 +1,8 @@
-
+---
 name: Organizational Narrative
 acronym: ON
 satisfies:
-  TSC:
+  TSC 2017:
     - CC1.2
     - CC1.3
     - CC1.4

@@ -3,55 +3,60 @@ html lang=en
   head
     meta charset=utf-8
     title {{.Project.Name}}
-    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"
-    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.6.2/sandstone/bulmaswatch.min.css"
-    script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"
+    link rel="stylesheet" href="https://unpkg.com/bulma/css/bulma.min.css"
+    link rel="stylesheet" href="https://unpkg.com/bulmaswatch/sandstone/bulmaswatch.min.css"
+    script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
     script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/later/1.2.0/later.min.js"
     script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettycron/0.11.0/prettycron.min.js"
-    script src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+    script src="https://unpkg.com/netlify-identity-widget@^1"
     meta name="viewport" content="width=device-width, initial-scale=1"
     = css
+      .netlify-identity-signup {
+        display: none;
+      }
     = javascript
       document.addEventListener("DOMContentLoaded", function(event) {
         document.querySelectorAll('.cron').forEach(function(el) {
-          el.innerHTML = prettyCron.toString((""+el.innerHTML).trim(),true) // 6-field expressions
+          var cronString = ("" + el.innerHTML).trim()
+          el.innerHTML = "<abbr title=\"Next run: " + prettyCron.getNext(cronString,true) + "\">" + prettyCron.toString(cronString,true) + "</abbr>"
         })
       })
 
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-
-      function show(name) {
-        if (history.replaceState) {
-            history.replaceState(null, null, '#'+name)
-        }
-
+      function updateNavigation() {
+        var name = location.hash.slice(1)
         var items = document.getElementsByClassName('top-nav')
         for (var i=0; i<items.length; i++) {
           var item = items[i]
           if (item.tagName === "LI") {
-            // navigation tabs
-            if (item.classList.contains(name)) {
+            var navigationName = name.split("-")[0]
+            if (item.className.indexOf(navigationName) > -1) {
               item.classList.add('is-active')
             } else {
               item.classList.remove('is-active')
             }
           } else {
-            // sections
-            if (item.id === name) {
+            if (name.indexOf(item.id) > -1) {
               item.classList.remove('is-hidden')
             } else {
               item.classList.add('is-hidden')
             }
           }
         }
+        var rowToScroll = document.getElementById(name)
+        if (name.indexOf("-") > -1 && rowToScroll) {
+          rowToScroll.scrollIntoView();
+        }
+      };
+
+      window.onpopstate = function() {
+        updateNavigation()
+      };
+
+      function show(name) {
+        if (history.pushState) {
+          history.pushState(null, null, '#'+name)
+        }
+        updateNavigation()
       }
   body
     section.hero.is-primary.is-small
@@ -139,19 +144,27 @@ html lang=en
           p
             strong Narratives
             | provide an overview of the organization and the compliance environment.
-      table.table.is-size-4
+      table.table.is-fullwidth.is-striped.is-hoverable.is-size-4
         thead
           tr
             th Name
             th Acronym
+            th TSC Satisfied
             th PDF
         tbody
-          {{range .Narratives }}
-          tr
+          {{range (index .Narratives) }}
+          tr id=narratives-{{.Acronym}}
             td {{.Name}}
             td {{.Acronym}}
+            td 
+              {{ range (index .Satisfies "TSC 2017") }}
+                code
+                  a href=javascript:show('standards-{{.}}') style="white-space: nowrap;"
+                    {{.}}
+                | 
+              {{end}}
             td
-              a href={{.OutputFilename}} target=_blank
+              a href=/documents/{{.OutputFilename}} target=_blank style="white-space: nowrap;"
                 {{.OutputFilename}}
           {{end}}
     #policies.section.top-nav.container.content
@@ -160,19 +173,27 @@ html lang=en
           p
             strong Policies
             | govern the behavior of {{.Name}} employees and contractors.
-      table.table.is-size-4
+      table.table.is-fullwidth.is-striped.is-hoverable.is-size-4
         thead
           tr
             th Name
             th Acronym
+            th TSC Satisfied
             th PDF
         tbody
           {{range .Policies }}
-          tr
+          tr id=policies-{{.Acronym}}
             td {{.Name}}
             td {{.Acronym}}
             td
-              a href={{.OutputFilename}} target=_blank
+              {{ range (index .Satisfies "TSC 2017") }}
+                code
+                  a href=javascript:show('standards-{{.}}')
+                    {{.}}
+                | 
+              {{end}}
+            td 
+              a href=/documents/{{.OutputFilename}} target=_blank style="white-space: nowrap;"
                 {{.OutputFilename}}
           {{end}}
     #procedures.section.top-nav.container.content
@@ -181,7 +202,7 @@ html lang=en
           p
             strong Procedures
             | prescribe specific steps that are taken in response to key events.
-      table.table.is-size-4
+      table.table.is-fullwidth.is-striped.is-hoverable.is-size-4
         thead
           tr
             th Name
@@ -189,11 +210,11 @@ html lang=en
             th Schedule (cron format)
         tbody
           {{range .Procedures }}
-          tr
+          tr id=procedures-{{.ID}}
             td {{.Name}}
             td {{.ID}}
             {{if .Cron}}
-            td.cron {{.Cron}}
+            td.cron data-cron="{{.Cron}}" {{.Cron}}
             {{else}}
             td On demand
             {{end}}
@@ -204,16 +225,16 @@ html lang=en
           p
             strong Standards
             | specify the controls satisfied by the compliance program.
-      table.table.is-size-4.is-fullwidth
+      table.table.is-fullwidth.is-striped.is-hoverable.is-size-4
         thead
           tr
-            th Control Key
-            th Name
-            th Satisfied?
-            th Satisfied By
+            th style="white-space: nowrap;" Control Key
+            th style="white-space: nowrap;" Name
+            th style="white-space: nowrap;" Satisfied?
+            th style="white-space: nowrap;" Satisfied By
         tbody
           {{range .Controls }}
-          tr
+          tr id=standards-{{.ControlKey}}
             td {{.ControlKey}}
             td
               strong {{.Name}}
@@ -225,26 +246,37 @@ html lang=en
             {{end}}
             td
               {{range .SatisfiedBy}}
-              a.is-size-7 href={{.}} target=_blank
+              a.is-size-7 href={{.}} target=_blank style="white-space: nowrap;"
                 {{.}}
               {{end}}
           {{end}}
 
     footer.footer
       .container
-        .content.has-text-centered
+        .has-text-centered.content
           p {{.Project.OrganizationName}} Confidential 2019
-          p Build date: [Build date]
-          p data-netlify-identity-button=""
+          p data-last-edit-date=
+        .has-text-centered data-netlify-identity-menu=""
   = javascript
-    if (window.location.hash=="") {
+    if (window.location.hash == "") {
       show('overview')
     } else {
       var hashComponents = window.location.hash.split('#')
       if (hashComponents.length>1) {
         var destination = hashComponents[1]
-        if (["overview","narratives","policies","procedures","standards"].indexOf(destination) >= 0) {
+        if (["overview","narratives","policies","procedures","standards"].indexOf(destination.split("-")[0]) >= 0) {
           show(destination)
         }
       }
     }
+    if (netlifyIdentity) {
+      netlifyIdentity.on("init", () => {
+        netlifyIdentity.on("logout", () => {
+          document.location.href = "/login"
+        })
+      })
+      netlifyIdentity.init({
+        logo: false
+      });
+    }
+    

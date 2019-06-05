@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "CMUSerif";
+  src: url("https://fontlibrary.org/assets/fonts/cmu-serif/6fcdeb7a603e986ae49da1030eb1966b/971a7f1818098f6fd3bb91b08be096df/CMUSerifBold.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CMUSerif";
+  src: url("https://fontlibrary.org/assets/fonts/cmu-serif/59c4efc3fa08079ca44060ca808c8f58/cd9c0404b3cd1dc863a5940ca609c8f4/CMUSerifBoldItalic.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "CMUSerif";
+  src: url("https://fontlibrary.org/assets/fonts/cmu-serif/59c4efc3fa08079ca44060ca808c8f58/86153f0958ae90bf30249dcb98d04a7d/CMUSerifItalic.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "CMUSerif";
+  src: url("https://fontlibrary.org/assets/fonts/cmu-serif/6fcdeb7a603e986ae49da1030eb1966b/01643be9fa75a4523c77ac348b242aed/CMUSerifRoman.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+dl {
+  border: 2px solid #ccc;
+  padding: 1em;
+}
+dt {
+  float: left;
+  clear: left;
+  text-align: right;
+  font-weight: bold;
+  width: 100px;
+}
+dt::after {
+  content: ":";
+}
+dd {
+  margin: 0 0 0 110px;
+  padding: 0 0 0.5em 0;
+}
+dd > ul {
+  padding-inline-start: 17px;
+  margin-top: 0px;
+}
+
+.latex-container {
+  font-family: "CMUSerif", serif;
+  text-align: justify;
+  counter-reset: h1;
+  zoom: 1.1;
+}
+
+.latex {
+  max-width: 710px;
+  margin: auto;
+}
+
+.latex img {
+  max-width: 100%;
+}
+
+.latex h1,h2,h3,h4,h5,h6 {
+  zoom: 0.7;
+}
+
+.latex h1 {
+  counter-reset: h2;
+}
+.latex h2 {
+  counter-reset: h3;
+}
+.latex h1:before {
+  counter-increment: h1;
+  content: counter(h1) "\0000a0\0000a0\0000a0";
+}
+.latex h2:before {
+  counter-increment: h2;
+  content: counter(h1) "." counter(h2) "\0000a0\0000a0\0000a0";
+}
+.latex h3:before {
+  counter-increment: h3;
+  content: counter(h1) "." counter(h2) "." counter(h3) "\0000a0\0000a0\0000a0";
+}

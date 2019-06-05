@@ -1,8 +1,8 @@
-
+---
 name: Risk Assessment Policy
 acronym: RIAP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC9.1
 majorRevisions:
   - date: Jun 1 2018

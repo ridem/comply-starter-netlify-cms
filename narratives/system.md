@@ -1,4 +1,4 @@
-
+---
 name: System Architecture Narrative
 acronym: SAN
 majorRevisions:

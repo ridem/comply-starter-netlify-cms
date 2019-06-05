@@ -1,6 +1,8 @@
+.vscode
 comply.yml
 output
+node_modules
 tex2pdf.*
 .comply
-
-.vscode
+.netlify
+/tools

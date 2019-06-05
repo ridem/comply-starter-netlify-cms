@@ -1,13 +1,53 @@
 [build]
-  command = "./build-netlify.sh"
+  # Our default build command
+  command = "./netlify-build.sh"
+  # This is the directory that we are publishing after the build command (relative to root of your repo)
   publish = "output"
 
-[template.environment]
-  GITHUB_TOKEN = "Put your github token here if needed, leave empty otherwise"
+[dev]
+  command = "comply serve" # Command to start your dev server
+  port = 4000 # Port that the dev server will be listening on
+  publish = "output"
 
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
-    # If you wish to password-protect the site, uncomment the following line:
-    # Basic-Auth = "user:password"
-    # You can put security response headers here
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+
+# The "documents" folder is restricted to users with the role "viewer"
+[[redirects]]
+  from = "/documents/*"
+  to = "/documents/:splat"
+  status = 200
+  force = true
+  conditions = {Role = ["viewer"]}
+[[redirects]]
+  from = "/documents/*"
+  to = "/login"
+  force = true
+# The "documents" folder is restricted to users with the role "viewer"
+[[redirects]]
+  from = "/uploads/*"
+  to = "/uploads/:splat"
+  status = 200
+  force = true
+  conditions = {Role = ["editor"]}
+[[redirects]]
+  from = "/uploads/*"
+  to = "/login"
+  force = true
+# The homepage is restricted to users with the role "viewer"
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  force = true
+  conditions = {Role = ["viewer"]}
+[[redirects]]
+  from = "/"
+  to = "/login"
+  force = true
+  

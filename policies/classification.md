@@ -1,8 +1,8 @@
-
+---
 name: Data Classification Policy
 acronym: DCP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC9.9
 majorRevisions:
   - date: Jun 1 2018

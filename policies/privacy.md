@@ -1,8 +1,8 @@
-
+---
 name: Privacy Management Policy
 acronym: PMP
 satisfies:
-  TSC:
+  TSC 2017:
     - P1.1
     - P2.1
     - P3.1

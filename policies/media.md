@@ -1,8 +1,8 @@
-
+---
 name: Removable Media and Cloud Storage Policy
 acronym: MCP
 satisfies:
-  TSC:
+  TSC 2017:
     - CC6.7
 majorRevisions:
   - date: Jun 1 2018

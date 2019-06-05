@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password-Protected site</title>
+    <script src="https://unpkg.com/netlify-identity-widget@^1"></script>
+  </head>
+  <body style="background: rgb(14, 30, 37)">
+    <script>
+      var setCookie = function(user) {
+        document.cookie = "nf_jwt="+user.token.access_token+"; path=/";
+      }
+      netlifyIdentity.on("init", user => {
+        if (!user) {
+          netlifyIdentity.on("login", user => {
+            setCookie(user)
+            if (user.app_metadata.roles.indexOf("editor") > -1) {
+              document.location.href = "/admin/";
+            } else {
+              document.location.href = "/";
+            }
+          });
+        }
+        var currentUser = netlifyIdentity.currentUser()
+        if (currentUser) {
+          currentUser.getUserData().then((user) => {
+            setCookie(user)
+          })
+        }
+      });
+      netlifyIdentity.init({
+        logo: false
+      });
+      netlifyIdentity.open();
+    </script>
+  </body>
+</html>

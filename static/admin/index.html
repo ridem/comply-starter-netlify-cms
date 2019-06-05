@@ -1,13 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
-<body>
-  <!-- Include the script that builds the page and powers Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Manager</title>
+    <script src="https://unpkg.com/netlify-identity-widget@^1"></script>
+    <script src="https://unpkg.com/immutable@^3"></script>
+    <link rel="stylesheet" href="global.css" type="text/css" />
+  </head>
+
+  <body>
+    <script>
+      if (location.pathname !== "/admin/") {
+        document.location.href = "/admin/"
+      }
+    </script>
+    <script src="https://unpkg.com/netlify-cms@^2"></script>
+    <script src="index.js"></script>
+    <script>
+      netlifyIdentity.init({
+        logo: false
+      });
+    </script>
+  </body>
 </html>
