@@ -238,22 +238,25 @@ $endif$
 % \date{$date$}
 \date{}
 
-\newcounter{totfigures}
-\newcounter{tottables}
-
-\providecommand\totfig{} 
-\providecommand\tottab{}
+\newif\iffigures
+\newif\iftables
 
 \makeatletter
-\AtEndDocument{%
-  \addtocounter{totfigures}{\value{figure}}%
-  \addtocounter{tottables}{\value{table}}%
-  \immediate\write\@mainaux{%
-    \string\gdef\string\totfig{\number\value{totfigures}}%
-    \string\gdef\string\tottab{\number\value{tottables}}%
-  }%
+\AtEndDocument {%
+    \if@filesw
+       \ifnum\value{figure}=\z@ % no figures
+          \immediate\write\@mainaux {\global\string\figuresfalse}%
+       \else
+          \immediate\write\@mainaux {\global\string\figurestrue}%
+       \fi
+       \ifnum\value{table}=\z@ % no tables
+          \immediate\write\@mainaux {\global\string\tablesfalse}%
+       \else
+          \immediate\write\@mainaux {\global\string\tablestrue}%
+       \fi
+    \fi
 }
-\makeatother
+\makeatother 
 
 \begin{document}
 $if(title)$
@@ -288,7 +291,9 @@ $if(lot)$
 \listoftables
 $endif$
 $if(lof)$
-\if \totfig{} > 0 \listoffigures \fi
+\iffigures
+  \listoffigures
+\fi
 $endif$
 
 \clearpage

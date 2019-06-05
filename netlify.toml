@@ -17,37 +17,39 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
 
-# The "documents" folder is restricted to users with the role "viewer"
-[[redirects]]
-  from = "/documents/*"
-  to = "/documents/:splat"
-  status = 200
-  force = true
-  conditions = {Role = ["viewer"]}
-[[redirects]]
-  from = "/documents/*"
-  to = "/login"
-  force = true
-# The "documents" folder is restricted to users with the role "viewer"
-[[redirects]]
-  from = "/uploads/*"
-  to = "/uploads/:splat"
-  status = 200
-  force = true
-  conditions = {Role = ["editor"]}
-[[redirects]]
-  from = "/uploads/*"
-  to = "/login"
-  force = true
-# The homepage is restricted to users with the role "viewer"
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 200
-  force = true
-  conditions = {Role = ["viewer"]}
-[[redirects]]
-  from = "/"
-  to = "/login"
-  force = true
+# Uncomment + activate Netlify Identity to make private
+
+# # The "documents" folder is restricted to users with the role "viewer"
+# [[redirects]]
+#   from = "/documents/*"
+#   to = "/documents/:splat"
+#   status = 200
+#   force = true
+#   conditions = {Role = ["viewer"]}
+# [[redirects]]
+#   from = "/documents/*"
+#   to = "/login"
+#   force = true
+# # The "documents" folder is restricted to users with the role "viewer"
+# [[redirects]]
+#   from = "/uploads/*"
+#   to = "/uploads/:splat"
+#   status = 200
+#   force = true
+#   conditions = {Role = ["editor"]}
+# [[redirects]]
+#   from = "/uploads/*"
+#   to = "/login"
+#   force = true
+# # The homepage is restricted to users with the role "viewer"
+# [[redirects]]
+#   from = "/"
+#   to = "/index.html"
+#   status = 200
+#   force = true
+#   conditions = {Role = ["viewer"]}
+# [[redirects]]
+#   from = "/"
+#   to = "/login"
+#   force = true
   
